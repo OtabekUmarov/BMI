@@ -140,7 +140,7 @@
 
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalScrollableTitle">Foydalanuvchi
-          qo'shish</h5>
+          ma'lumotlari</h5>
         <button
           type="button"
           class="btn-close"
@@ -226,7 +226,7 @@
     }
           let form = document.forms.userEdit
     function editUser(id) {
-      fetch(`users/edit/${id}`)
+      fetch(`/users/edit/${id}`)
         .then(res => res.json())
         .then(data => {
           form.login.value = data.login

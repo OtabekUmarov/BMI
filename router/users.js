@@ -32,6 +32,12 @@ router.get('/login', async (req, res) => {
         error: req.flash('error'),
     })
 })
+router.get('/profile', async (req, res) => {
+    res.render('users/profile', {
+        title: "Foydalanuvchi bo'limi",
+        layout: res.locals.userRole,
+    })
+})
 router.get('/logout', async (req, res) => {
     req.session.destroy((err) => {
         if (err) throw err
@@ -81,6 +87,7 @@ router.get('/edit/:id', auth, async (req, res) => {
     let user = await Users.findOne({
         _id
     })
+    console.log(user);
     res.send(user)
 })
 
