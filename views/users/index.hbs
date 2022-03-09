@@ -1,0 +1,238 @@
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex align-items-center justify-content-between">
+      <h5 class="card-title">{{title}}</h5>
+      <a
+        type="button"
+        class="btn btn-outline-success m-b-xs"
+        data-bs-toggle="modal"
+        data-bs-target="#openUserModal"
+      >Qo'shish</a>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">F.I.SH</th>
+          <th scope="col">Login</th>
+          <th scope="col">Role</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each users}}
+        <tr>
+          <th>{{increment @index}}</th>
+          <td>{{name}}</td>
+          <td>{{login}}</td>
+          <td>{{role}}</td>
+          <td>
+            <button class="btn btn-sm btn-warning mr-2" data-bs-toggle="modal"
+        data-bs-target="#openUserModalEdit" onclick="editUser('{{_id}}')"><i class="fa fa-pen"></i></button>
+          {{#if delete}}
+            <a href="users/delete/{{_id}}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+          {{/if}}
+           </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="openUserModal"
+  tabindex="-1"
+  aria-labelledby="openUserModal"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md"
+  >
+    <div class="modal-content">
+        <form action="/users/admin/reg" method="post" class="py-2" >
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">Foydalanuvchi
+          qo'shish</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+          <input type="hidden" name="_csrf" value="{{csrf}}">
+          <div class="mb-3">
+            <div class="form-floating">
+              <input
+                type="text"
+                name="name"
+                class="form-control"
+                id="floatingInput"
+                placeholder="Ism-familiya"
+              />
+              <label for="floatingInput">Ism-familiya</label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="form-floating">
+              <input
+                type="text"
+                name="login"
+                class="form-control"
+                id="floatingInput"
+                placeholder="Login"
+                onblur="check(event)"
+              />
+              <label for="floatingInput">Login</label>
+              <div class="invalid-feedback" id="loginmsg">Bunday logindagi
+                foydalanuvchi mavjud!</div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="form-floating">
+              <input
+                type="password"
+                name="password"
+                class="form-control"
+                id="floatingPassword"
+                placeholder="Mahfiy kalit"
+              />
+              <label for="floatingPassword">Mahfiy kalit</label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="role">
+              <option selected="" disabled="disabled" >Foydalanuvchi roli</option>
+              <option value="1">Superadmin</option>
+              <option value="2">Foydalanuvchi</option>
+              {{!-- <option value="3">Three</option> --}}
+            </select>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Bekor qilish</button>
+        <button type="submit" class="btn btn-primary">Kiritish</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="openUserModalEdit"
+  tabindex="-1"
+  aria-labelledby="openUserModal"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md"
+  >
+    <div class="modal-content">
+        <form action="/users/admin/save" method="post" class="py-2" name="userEdit">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">Foydalanuvchi
+          qo'shish</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+          <input type="hidden" name="_id">
+          <input type="hidden" name="_csrf" value="{{csrf}}">
+          <div class="mb-3">
+            <div class="form-floating">
+              <input
+                type="text"
+                name="name"
+                class="form-control"
+                id="floatingInput"
+                placeholder="Ism-familiya"
+              />
+              <label for="floatingInput">Ism-familiya</label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="form-floating">
+              <input
+                type="text"
+                name="login"
+                class="form-control"
+                id="floatingInput"
+                placeholder="Login"
+                onblur="check(event)"
+              />
+              <label for="floatingInput">Login</label>
+              <div class="invalid-feedback" id="loginmsg">Bunday logindagi
+                foydalanuvchi mavjud!</div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="role">
+              <option selected="" disabled="disabled" >Foydalanuvchi roli</option>
+              <option value="1">Superadmin</option>
+              <option value="2">Foydalanuvchi</option>
+              {{!-- <option value="3">Three</option> --}}
+            </select>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Bekor qilish</button>
+        <button type="submit" class="btn btn-primary">Saqlash</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+ {{#if error}}
+          <div class="alert alert-danger text-center my-toast" role="alert">
+            {{error}}
+          </div>
+        {{/if}}
+        {{#if success}}
+          <div class="alert alert-success text-center my-toast" role="alert">
+            {{success}}
+          </div>
+        {{/if}}
+<script>
+    function check(e) {
+        let login = e.target.value
+        if (login) {
+            fetch(`/users/check/${login}`)
+                .then(res => res.json())
+                .then(val => {
+                    if (val) {
+                        document.getElementById('loginmsg').style.display = 'block'
+                    } else {
+                        document.getElementById('loginmsg').style.display = 'none'
+                    }
+                })
+        }
+    }
+          let form = document.forms.userEdit
+    function editUser(id) {
+      fetch(`users/edit/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          form.login.value = data.login
+          form.name.value = data.name
+          form._id.value = data._id
+          form.role.value = data.role
+        })
+    }
+</script>

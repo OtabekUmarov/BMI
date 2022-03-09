@@ -1,0 +1,84 @@
+<div class="row justify-content-md-center">
+    <div class="col-md-12 col-lg-4">
+        <div class="card login-box-container">
+            <div class="card-body">
+                <div class="authent-logo">
+                    <img src="/images/logo@2x.png" alt="">
+                </div>
+                <div class="authent-text">
+                    <p>Ro'yhatdan o'tish</p>
+                    <p>Ro'yhatdan o'tish uchun maydonlarni to'ldiring</p>
+                </div>
+                <form action="/users/reg" method="post">
+                    <input type="hidden" name="_csrf" value="{{csrf}}">
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input type="text" name="name" class="form-control" id="floatingInput"
+                                placeholder="Ism-familiya">
+                            <label for="floatingInput">Ism-familiya</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input type="text" name="login" class="form-control" id="floatingInput" placeholder="Login"
+                                onblur="check(event)">
+                            <label for="floatingInput">Login</label>
+                            <div class="invalid-feedback" id="loginmsg">Bunday logindagi foydalanuvchi mavjud!</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input type="password" name="password" class="form-control" id="floatingPassword"
+                                placeholder="Mahfiy kalit">
+                            <label for="floatingPassword">Mahfiy kalit</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input type="password" name="confirmpassword" class="form-control" id="floatingPassword1"
+                                placeholder="Mahfiy kalitni tasdiqlang" onblur="checkpass(event)">
+                            <label for="floatingPassword">Mahfiy kalitni tasdiqlang</label>
+                        </div>
+                        <div class="invalid-feedback" id="passwordmsg">Mahfiy kalitni tasdiqlashda xatolik</div>
+                    </div>
+                    {{!-- <div class="mb-3 form-check">
+                                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                  <label class="form-check-label" for="exampleCheck1">Men ko'rsatilgan <a href="#">foydalanuvchi qoidalariga</a> rioya qilishga roziman</label>
+                                </div>
+                                <div class="d-grid"> --}}
+                    <button type="submit" class="btn btn-primary m-b-xs">Ro'yhatdan o'tish</button>
+            </div>
+            </form>
+            <div class="authent-login mb-3">
+                <p>Akkauntingiz bormi? <a href="/users/login">Tizimga kirish</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    function check(e) {
+        let login = e.target.value
+        if (login) {
+            fetch(`/users/check/${login}`)
+                .then(res => res.json())
+                .then(val => {
+                    if (val) {
+                        document.getElementById('loginmsg').style.display = 'block'
+                    } else {
+                        document.getElementById('loginmsg').style.display = 'none'
+                    }
+                })
+        }
+    }
+    function checkpass(e) {
+        let val = e.target.value
+        let pass = document.getElementById('floatingPassword').value
+        if(val == pass) {
+            document.getElementById("passwordmsg").style.display = 'none'
+        } else 
+            document.getElementById("passwordmsg").style.display = 'block'
+
+    }
+</script>

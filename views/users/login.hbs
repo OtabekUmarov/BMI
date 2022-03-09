@@ -1,0 +1,58 @@
+<div class="row justify-content-md-center">
+  <div class="col-md-12 col-lg-4">
+    <div class="card login-box-container">
+      <div class="card-body">
+        {{#if error}}
+          <div class="alert alert-danger text-center" role="alert">
+            {{error}}
+          </div>
+        {{/if}}
+        {{#if success}}
+          <div class="alert alert-success text-center" role="alert">
+            {{success}}
+          </div>
+        {{/if}}
+        <div class="authent-logo">
+          <img src="/images/logo@2x.png" alt="" />
+        </div>
+        <div class="authent-text">
+          <p>Xush kelibsiz</p>
+          <p>Tizimga kirish uchun maydonlarni to'ldiring</p>
+        </div>
+        <form action="/users/login" method="post">
+          <div class="mb-3">
+            <div class="form-floating">
+              <input type="hidden" name="_csrf" value="{{csrf}}" />
+              <input
+                type="text"
+                name="login"
+                class="form-control"
+                id="floatingInput"
+                placeholder="Login"
+              />
+              <label for="floatingInput">Login</label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="form-floating">
+              <input
+                type="password"
+                name="password"
+                class="form-control"
+                id="floatingPassword"
+                placeholder="Password"
+              />
+              <label for="floatingPassword">Mahfiy kalit</label>
+            </div>
+          </div>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-info m-b-xs">Kirish</button>
+          </div>
+        </form>
+        <div class="authent-reg">
+          <p>Akkaunt yo'qmi? <a href="/users/reg">Ro'yhatdan o'tish</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
