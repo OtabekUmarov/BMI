@@ -20,7 +20,7 @@ const flash = require('connect-flash') // !
 // router require
 const usersRouter = require('./router/users')
 const pageRouter = require('./router/page')
-const categoryRouter = require('./router/category')
+const messageRouter = require('./router/message')
 
 // middleware require
 const varMiddle = require('./middleware/var')
@@ -72,7 +72,7 @@ app.use(varMiddle)
 
 app.use('/', pageRouter)
 app.use('/users', usersRouter)
-app.use('/category', categoryRouter)
+app.use('/message', messageRouter)
 app.all('*', (req, res) => {
     res.status(404).render('404', {
         layout: "404"
