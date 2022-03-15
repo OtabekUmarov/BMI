@@ -4,3 +4,73 @@
     right: 50px;
     z-index: 99999;
 }
+.story-list {
+  width: 100%;
+    background: unset;
+    border: unset;
+    outline: unset;
+}
+button:focus {
+  outline: unset;
+}
+.story-info {
+  text-align: left;
+}
+.post-comments .post-comm.false {
+  width: 80%;
+  position: relative;
+}
+.post-comments .post-comm.true {
+  width: 80%;
+  margin-left: auto;
+  position: relative;
+  background-color: #d3fbf9;
+}
+.comment-date {
+  position: absolute;
+    right: 9px;
+    bottom: 1px;
+    font-size: 12px;
+}
+.post-comments .post-comm .comment-text {
+  padding-top: 0;
+  padding-bottom: 8px;
+  color: #000;
+}
+.message-wrap {
+  height: calc(100vh - 170px);
+  overflow: hidden;
+}
+.message-wrap .row > div,
+.message-wrap .card,
+/* .message-wrap .card-body, */
+.message-wrap .row {
+  height: 100%;
+}
+.message-wrap .col-lg-8 {
+  position: relative;
+}
+.message-wrap .card {
+  overflow: auto;
+}
+.message-wrap .card::-webkit-scrollbar, body::-webkit-scrollbar {
+  width: 0;
+}
+.new-comment {
+  width: calc(100% - 50px);
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+}
+.post-comments {
+  padding-bottom: 45px;
+}
+.post-header {
+  position: sticky;
+  top: 0;
+  padding: 10px;
+  z-index: 9;
+  background-color: #fff;
+}

@@ -38,7 +38,7 @@ app.use('/uploads', express.static('uploads'))
 app.use(express.urlencoded({
     extended: true
 }))
-const MONGODB_URI = 'mongodb://127.0.0.1:27017/students'
+const MONGODB_URI = 'mongodb://127.0.0.1:27017/bmi'
 let store = new MongoDBStore({
     uri: MONGODB_URI,
     collection: 'session'

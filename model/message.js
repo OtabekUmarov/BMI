@@ -10,7 +10,14 @@ const message = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Users'
     },
-    createdAt:Date
+    status: {
+        type: Number,
+        default: 0
+    },
+    createdAt:{
+        type: Date,
+        default: Date.now
+    }
 })
 
 

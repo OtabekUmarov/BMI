@@ -20,6 +20,8 @@ const users = new Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    logoutTime: String,
+    img:String
 })
 module.exports = model('Users', users)

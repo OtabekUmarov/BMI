@@ -1,120 +1,91 @@
-<div class="row">
-  <div class="col-md-12 col-lg-6">
-    <div class="card">
-      <div class="card-body">
-        <button class="btn btn-sm btn-warning mr-2" data-bs-toggle="modal"
-        data-bs-target="#openUserModal" ><i class="fa fa-pen"></i></button>
-      <form action="/message/create" method="post">
-      
-       <div class="post">
-          <div class="post-header">
-          
-          </div>
-          <div class="post-comments">
-            <div class="new-comment">
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Type something" aria-label="Type Something"
-                  aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Comment</button>
+<div class="message-wrap">
+  <div class="row">
+    <div class="col-md-12 col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Foydalanuvchilar</h5>
+          {{#each users}}
+          <button onclick="GetMessage('{{_id}}')" class="story-list mb-2">
+            <input type="hidden" value="{{_id}}" id="userIdInput">
+            <div class="story">
+              <img src="/images/avatars/profile-image.png" alt="">
+              <div class="story-info">
+                <span class="story-author">{{name}}</span>
+                <span class="story-time">{{logoutTime}}<span>
               </div>
             </div>
+          </button>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 col-lg-8">
+      <div class="card">
+        <div class="card-body pt-2">
+          <div class="post-header" id="postHeader">
+            
+          </div>
+          <div class="post-comments" id="msg-box">
           </div>
         </div>
-      </form>
+      </div>
+      <div class="new-comment mt-4">
+        <form action="/message/create" method="post" class="py-2">
+          <div class="input-group mb-3">
+            <input type="hidden" name="_csrf" value="{{csrf}}">
+            <input type="hidden" name="userId" id="formUserId">
+            <input type="text" name="title" class="form-control" placeholder="Habar yozish" aria-label="Habar yozish"
+              aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary btn-dark" type="submit" id="button-addon2">Yuborish</button>
+            
+          </div>
+        </form>
       </div>
     </div>
   </div>
-  <div class="col-md-12 col-lg-6">
-    <div class="card">
-      <div class="card-body">
-        <div class="post">
-          <div class="post-header">
-            <img src="/images/avatars/profile-image.png" alt="">
+</div>
+
+<script>
+  let card = document.getElementById('msg-box')
+  let postHeader = document.getElementById('postHeader')
+
+  function GetMessage(id) {
+    fetch(`/message/get/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        card.innerHTML = ''
+        postHeader.innerHTML = ''
+        document.getElementById('formUserId').value = data[0]._id
+        postHeader.innerHTML += `
+          <img src="/images/avatars/profile-image.png" alt="">
             <div class="post-info">
-              <span class="post-author">John Doe</span><br>
-              <span class="post-date">3hrs</span>
+              <span class="post-author">${data[0].name}</span><br>
+              <span class="post-date">${data[0].logoutTime}</span>
             </div>
-            <div class="post-header-actions">
-              <a href="#"><i class="fas fa-ellipsis-h"></i></a>
-            </div>
-          </div>
-          <div class="post-comments">
-            <div class="post-comm">
-              <img src="/images/avatars/profile-image.png" class="comment-img" alt="">
-              <div class="comment-container">
-                <span class="comment-author">
-                  Sonny Rosas
-                  <small class="comment-date">5min</small>
+        `
+        data.splice(0, 1)
+        data.forEach(item => {
+          card.innerHTML += `
+              <div class="post-comm ${item.msg}">
+                {{!-- <img src="/images/avatars/profile-image.png" class="comment-img" alt="" >
+                <div class="comment-container">
+                    <span class="comment-author">
+                        ${item.user.name}
+                    </span>
+                </div> --}}
+                        <small class="comment-date">${item.createdAt}</small>
+                <span class="comment-text">
+                  ${item.title}
                 </span>
-              </div>
-              <span class="comment-text">
-                Mauris ultrices convallis massa, nec facilisis enim interdum ac.
-              </span>
             </div>
-            <div class="new-comment">
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Type something" aria-label="Type Something"
-                  aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Comment</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+            `
+        })
+      })
+    setTimeout(() => {
+      var objDiv = document.querySelector('.message-wrap .card')
+      document.querySelector('.card-body').scrollTop = 1000
+    }, 0)
+  }
 
-<div
-  class="modal fade"
-  id="openUserModal"
-  tabindex="-1"
-  aria-labelledby="openUserModal"
-  aria-hidden="true"
->
-  <div
-    class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md"
-  >
-    <div class="modal-content">
-        <form action="/users/admin/reg" method="post" class="py-2" >
-
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalScrollableTitle">Habar yozish</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-      <input type="hidden" name="_csrf" value="{{csrf}}">
-      <input type="hidden" name="user" value="{{user._id}}">
-          <div class="mb-3">
-            <div class="form-floating">
-                <select class="form-select mt-3" aria-label="Default select example" name="userId">
-              <option selected="" disabled>Foydalanuvchi</option> 
-              {{#each users}}
-              <option value="{{_id}}">{{name}}</option>
-              {{/each}}
-            </select>
-              <label for="floatingInput">Foydalanuvchi</label>
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="floatingInput">Habar matni</label>
-           <textarea class="form-control mt-2" aria-label="With textarea" placeholder="Habarni kiriting"></textarea>
-          </div>
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-bs-dismiss="modal"
-        >Bekor qilish</button>
-        <button type="submit" class="btn btn-primary">Yuborish</button>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
+  GetMessage(document.querySelector('#userIdInput:first-child').value)
+</script>

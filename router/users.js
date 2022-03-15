@@ -39,6 +39,13 @@ router.get('/profile', async (req, res) => {
     })
 })
 router.get('/logout', async (req, res) => {
+    let _id = res.locals.user._id
+    let user = await Users.findOne({
+        _id
+    })
+    console.log(Date.now());
+    user.logoutTime = new Date()
+    await Users.findByIdAndUpdate(_id, user)
     req.session.destroy((err) => {
         if (err) throw err
         res.redirect('/users/login')
@@ -87,7 +94,6 @@ router.get('/edit/:id', auth, async (req, res) => {
     let user = await Users.findOne({
         _id
     })
-    console.log(user);
     res.send(user)
 })
 
