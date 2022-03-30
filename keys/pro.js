@@ -1,21 +1,17 @@
-// module.exports = {
-//     MONGODB_URI: process.env.MONGODB_URI,
-//     SESSION_SECRET: process.env.SESSION_SECRET,
-//     SYSTEM_EMAIL: process.env.SYSTEM_EMAIL,
-//     PASSWORD_EMAIL: process.env.PASSWORD_EMAIL
-// }
+module.exports = {
+    MONGODB_URI: process.env.MONGODB_URI,
+    SESSION_SECRET: process.env.SESSION_SECRET,
+}
 
+// BASE_URL: 'localhost',
+// module.exports = {
+//     MONGODB_URI: 'mongodb+srv://Salohbek:W09pGNOdemn5kra4@cluster0.rewyp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+//     SESSION_SECRET: 'asasa asas dsdfgd some secret key',
+// }
 // module.exports = {
 //     BASE_URL: 'localhost',
-//     MONGODB_URI: 'mongodb+srv://UmarovOtabek:XyXoGfspPY7Rb5a8@cluster0.a0nss.mongodb.net/myFirstDatabase',
-//     SESSION_SECRET: 'some secret key',
+//     MONGODB_URI: 'mongodb://127.0.0.1:27017/bmi',
+//     SESSION_SECRET: 'some secret key umarov otabek',
 //     SYSTEM_EMAIL: 'umarovotabek0220@gmail.com',
 //     PASSWORD_EMAIL: 'Otabek1999#'
 // }
-module.exports = {
-    BASE_URL: 'localhost',
-    MONGODB_URI: 'mongodb://127.0.0.1:27017/bmi',
-    SESSION_SECRET: 'some secret key umarov otabek',
-    SYSTEM_EMAIL: 'umarovotabek0220@gmail.com',
-    PASSWORD_EMAIL: 'Otabek1999#'
-}

@@ -25,6 +25,8 @@ const messageRouter = require('./router/message')
 // middleware require
 const varMiddle = require('./middleware/var')
 // const layout = require('./middleware/layout')
+const keys = require('./keys/pro')
+
 const hbs = exphbs.create({
     defaultLayout: 'adminlayout',
     extname: '.hbs'
@@ -38,13 +40,13 @@ app.use('/uploads', express.static('uploads'))
 app.use(express.urlencoded({
     extended: true
 }))
-const MONGODB_URI = 'mongodb://127.0.0.1:27017/bmi'
+// const MONGODB_URI = 'mongodb://127.0.0.1:27017/bmi'
 let store = new MongoDBStore({
-    uri: MONGODB_URI,
+    uri:  keys.MONGODB_URI,
     collection: 'session'
 })
 app.use(session({
-    secret: 'laksjdhlkasjdhsakj',
+    secret: keys.SESSION_SECRET,
     saveUninitialized: false,
     cookie: {
         maxAge: 1000 * 60 * 60,
@@ -78,13 +80,13 @@ app.all('*', (req, res) => {
         layout: "404"
     });
 });
-
+const port = process.env.PORT || '3000'
 async function dev() {
     try {
-        await mongoose.connect(MONGODB_URI, {
+        await mongoose.connect(keys.MONGODB_URI, {
             useNewUrlParser: true
         })
-        app.listen(3000, () => {
+        app.listen(port, () => {
             console.log(`Server is running 3000`)
         })
     } catch (error) {
