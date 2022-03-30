@@ -16,6 +16,9 @@ const MongoDBStore = require('connect-mongodb-session')(session) // !
 //     return util.value(a == b, this, options);
 //   };
 const flash = require('connect-flash') // !
+const helmet = require('helmet')
+const compression = require('compression')
+
 
 // router require
 const usersRouter = require('./router/users')
@@ -70,6 +73,9 @@ app.use(csrf())
 app.use(cookieParser())
 app.use(flash()) // !
 app.use(varMiddle)
+app.use(helmet())
+app.use(compression())
+
 
 
 app.use('/', pageRouter)
@@ -80,13 +86,13 @@ app.all('*', (req, res) => {
         layout: "404"
     });
 });
-const port = process.env.PORT || '3000'
+const PORT = process.env.PORT || '3000'
 async function dev() {
     try {
         await mongoose.connect(keys.MONGODB_URI, {
             useNewUrlParser: true
         })
-        app.listen(port, () => {
+        app.listen(PORT, () => {
             console.log(`Server is running 3000`)
         })
     } catch (error) {
